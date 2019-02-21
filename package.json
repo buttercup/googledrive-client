@@ -1,0 +1,30 @@
+{
+  "name": "@buttercup/googledrive-client",
+  "version": "0.0.0",
+  "description": "Basic client for Google Drive",
+  "main": "source/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buttercup/googledrive-client.git"
+  },
+  "keywords": [
+    "google",
+    "drive",
+    "client",
+    "request"
+  ],
+  "author": "Perry Mitchell <perry@perrymitchell.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buttercup/googledrive-client/issues"
+  },
+  "homepage": "https://github.com/buttercup/googledrive-client#readme",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "hot-patcher": "^0.5.0",
+    "verror": "^1.10.0"
+  }
+}
