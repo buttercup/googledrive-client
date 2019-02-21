@@ -71,7 +71,7 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
             corpora: "user",
             pageSize: 1000,
             spaces: "drive",
-            fields: "files(id,name,mimeType,createdTime,modifiedTime,shared,size,parents),nextPageToken"
+            fields: "files(id,name,mimeType,createdTime,modifiedTime,shared,size,parents,trashed),nextPageToken"
         },
         headers: {
             Authorization: `Bearer ${token}`
@@ -97,7 +97,7 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
                         created: googleFile.createdTime,
                         modified: googleFile.modifiedTime,
                         shared: googleFile.shared,
-                        size: googleFile.size
+                        size: parseInt(googleFile.size, 10)
                     }))
             ];
             if (result.nextPageToken) {
