@@ -1,6 +1,8 @@
 # Google Drive Client
 > Client for making basic Google Drive requests
 
+[![Build Status](https://travis-ci.org/buttercup/googledrive-client.svg?branch=master)](https://travis-ci.org/buttercup/googledrive-client)
+
 ## About
 
 This library allows for performing basic actions against Google's RESTful Drive API. It supports **fetching directory contents**, **reading** files and **writing** files. Note that file reading & writing is only supported with text files currently. It uses [axios](https://github.com/axios/axios) to perform requests, which has been proven to be a stable cross-platform library perfect for this purpose.
