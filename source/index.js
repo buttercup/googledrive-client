@@ -24,7 +24,8 @@ const { getFileContents, putFileContents } = require("./fileContents.js");
 /**
  * Create a new Google Drive client adapter using a token
  * @param {String} token The dropbox token
- * @returns {GoogleDriveClientAdapter}
+ * @returns {GoogleDriveClientAdapter} A client adapter instance
+ * @memberof module:GoogleDriveClient
  */
 function createClient(token) {
     const patcher = new HotPatcher();
@@ -70,6 +71,10 @@ function createClient(token) {
         putFileContents: ({ id, name, parent, contents } = {}) => putFileContents(token, patcher, { id, contents, name, parentID: parent })
     };
 }
+
+/**
+ * @module GoogleDriveClient
+ */
 
 module.exports = {
     createClient
