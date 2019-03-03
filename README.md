@@ -31,3 +31,16 @@ client.getDirectoryContents();
 ```
 
 Make sure to check out the [API documentation](API.md) for more information.
+
+### Token Expiration or Invalid Credentials
+
+This library uses [`VError`](https://github.com/joyent/node-verror) to pass extra error information around, such as when authentication fails while making a request. This makes it easier for downstream libraries to handle such authorisation failures, perhaps by requesting a new token.
+
+If an error is thrown, use `VError` to extract the information from it to test if an authorisation failure has occurred:
+
+```javascript
+client.getDirectoryContents().catch(err => {
+    const { authFailure = false } = VError.info(err);
+    // handle authFailure === true
+});
+```
