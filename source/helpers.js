@@ -11,7 +11,12 @@ function extractReponseError(err) {
 function handleError(err) {
     const extError = extractReponseError(err);
     if (extError) {
-        throw new VError(err, `Request failed: ${extError}`);
+        throw new VError({
+            cause: err,
+            info: {
+                authFailure: /Invalid Credentials/i.test(extError)
+            }
+        }, `Request failed: ${extError}`);
     }
     throw new VError(err, "Request failed");
 }
