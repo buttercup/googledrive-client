@@ -137,7 +137,6 @@ Get directory contents
 | --- | --- | --- |
 | [currentFiles] | <code>Array.&lt;Object&gt;</code> | Previously fetched files to add to future results (pages) |
 | [nextPageToken] | <code>String</code> | Token to use for fetching the contents of the next page |
-| [fetchMorePages] | <code>Boolean</code> | Fetch more than 1 page worth of results (default: true) |
 
 <a name="FileItem"></a>
 
