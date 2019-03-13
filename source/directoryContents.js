@@ -35,7 +35,6 @@ function formulateTree(files) {
  * @typedef {Object} IntGetDirectoryContentsOptions
  * @property {Array.<Object>=} currentFiles - Previously fetched files to add to future results (pages)
  * @property {String=} nextPageToken - Token to use for fetching the contents of the next page
- * @property {Boolean=} fetchMorePages - Fetch more than 1 page worth of results (default: true)
  */
 
 /**
@@ -63,7 +62,7 @@ function formulateTree(files) {
  * @returns {Promise.<FileItem[]|FileTreeNode>} A promise that resolves with an array of file items
  *  (formTree=false) or a file tree node (formTree=true)
  */
-function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken, fetchMorePages = true, formTree = false } = {}) {
+function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken, formTree = false } = {}) {
     const options = {
         url: "https://www.googleapis.com/drive/v3/files",
         method: "GET",
@@ -103,7 +102,8 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
             if (result.nextPageToken) {
                 return getDirectoryContents(token, patcher, {
                     currentFiles: files,
-                    nextPageToken: result.nextPageToken
+                    nextPageToken: result.nextPageToken,
+                    formTree
                 });
             }
             return formTree ? formulateTree(files) : files;
