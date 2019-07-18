@@ -1,34 +1,17 @@
 const VError = require("verror");
 
-function extractReponseError(err) {
-    try {
-        return err.response.data.error.message;
-    } catch (err2) {
-        return null;
-    }
-}
-
 function handleError(err) {
-    const extError = extractReponseError(err);
-    if (extError) {
+    if (err.responseHeaders && err.responseHeaders["www-authenticate"]) {
         throw new VError({
             cause: err,
             info: {
-                authFailure: /Invalid Credentials/i.test(extError)
+                authFailure: /error=invalid_token/.test(err.responseHeaders["www-authenticate"])
             }
-        }, `Request failed: ${extError}`);
+        }, "Request failed");
     }
     throw new VError(err, "Request failed");
 }
 
-function handleResponse(response) {
-    if (!response.status || response.status < 200 || response.status >= 300) {
-        throw new Error(`Invalid response: ${response.status} ${response.statusText}`);
-    }
-    return response;
-}
-
 module.exports = {
     handleError,
-    handleResponse
 };
