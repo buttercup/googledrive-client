@@ -9,7 +9,7 @@ function getFileContents(token, patcher, id) {
     const options = {
         url: `https://www.googleapis.com/drive/v3/files/${id}`,
         method: "GET",
-        params: {
+        query: {
             alt: "media"
         },
         headers: {
@@ -17,7 +17,6 @@ function getFileContents(token, patcher, id) {
         }
     };
     return patcher.execute("request", options)
-        .then(handleResponse)
         .then(resp => resp.data)
         .catch(handleError);
 }
@@ -66,7 +65,7 @@ function putFileContents(token, patcher, {
     const options = {
         url,
         method,
-        params: {
+        query: {
             uploadType: "multipart"
         },
         headers: {
@@ -74,10 +73,9 @@ function putFileContents(token, patcher, {
             "Content-Type": `multipart/related; boundary=${boundary}`,
             "Content-Length": size.toString()
         },
-        data: payload
+        body: payload
     };
     return patcher.execute("request", options)
-        .then(handleResponse)
         .then(res => res.data.id)
         .catch(handleError);
 }
