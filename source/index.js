@@ -1,5 +1,5 @@
 const HotPatcher = require("hot-patcher");
-const axios = require("axios");
+const { request } = require("cowl");
 const { getDirectoryContents } = require("./directoryContents.js");
 const { getFileContents, putFileContents } = require("./fileContents.js");
 
@@ -29,7 +29,7 @@ const { getFileContents, putFileContents } = require("./fileContents.js");
  */
 function createClient(token) {
     const patcher = new HotPatcher();
-    patcher.patch("request", axios);
+    patcher.patch("request", request);
     /**
      * @class GoogleDriveClientAdapter
      */
@@ -37,9 +37,9 @@ function createClient(token) {
         /**
          * @type {Function}
          * @memberof GoogleDriveClientAdapter
-         * @see https://github.com/axios/axios
+         * @see https://github.com/perry-mitchell/cowl
          */
-        axios,
+        request,
         /**
          * @type {HotPatcher}
          * @memberof GoogleDriveClientAdapter

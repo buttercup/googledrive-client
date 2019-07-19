@@ -66,7 +66,7 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
     const options = {
         url: "https://www.googleapis.com/drive/v3/files",
         method: "GET",
-        params: {
+        query: {
             corpora: "user",
             pageSize: 1000,
             spaces: "drive",
@@ -77,10 +77,9 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
         }
     };
     if (nextPageToken) {
-        options.params.pageToken = nextPageToken;
+        options.query.pageToken = nextPageToken;
     }
     return patcher.execute("request", options)
-        .then(handleResponse)
         .then(response => {
             const result = response.data;
             const files = [
