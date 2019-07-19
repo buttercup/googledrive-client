@@ -1,7 +1,7 @@
 # Google Drive Client
 > Client for making basic Google Drive requests
 
-[![Build Status](https://travis-ci.org/buttercup/googledrive-client.svg?branch=master)](https://travis-ci.org/buttercup/googledrive-client)
+[![Build Status](https://travis-ci.org/buttercup/googledrive-client.svg?branch=master)](https://travis-ci.org/buttercup/googledrive-client) [![npm version](https://badge.fury.io/js/%40buttercup%2Fgoogledrive-client.svg)](https://www.npmjs.com/package/@buttercup/googledrive-client)
 
 ## About
 
