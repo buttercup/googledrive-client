@@ -24,24 +24,13 @@ describe("fileContents", function() {
         });
 
         it("includes auth flag if error failed due to authorization", function() {
-            const failureError = new Error("Request failed with status code 401");
-            failureError.response = {
-                data: {
-                    "error": {
-                        "errors": [
-                            {
-                            "domain": "global",
-                            "reason": "authError",
-                            "message": "Invalid Credentials",
-                            "locationType": "header",
-                            "location": "Authorization"
-                            }
-                        ],
-                        "code": 401,
-                        "message": "Invalid Credentials"
-                    }
-                }
-            }
+            const failureError = new Error("Request failed: 401 Unauthorized");
+            failureError.status = 401;
+            failureError.statusText = "Unauthorized";
+            failureError.responseHeaders = {
+                "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
+            };
+            failureError.responseBody = `{"error":{"errors":[{"domain":"global","reason":"authError","message":"Invalid Credentials","locationType":"header","location":"Authorization"}],"code":401,"message":"Invalid Credentials"}}`;
             this.requestSpy.returns(Promise.reject(failureError))
             return this.client.getFileContents("abc").then(res => {
                 throw new Error("Request should have failed");
