@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.3.0
+_2019-07-19_
+
+ * Request library `axios` replaced with `cowl`
+
 ## v0.2.1
 _2019-03-13_
 

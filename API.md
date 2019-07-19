@@ -58,17 +58,17 @@ Create a new Google Drive client adapter using a token
 **Kind**: global class  
 
 * [GoogleDriveClientAdapter](#GoogleDriveClientAdapter)
-    * [.axios](#GoogleDriveClientAdapter.axios) : <code>function</code>
+    * [.request](#GoogleDriveClientAdapter.request) : <code>function</code>
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.putFileContents(options)](#GoogleDriveClientAdapter.putFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
 
-<a name="GoogleDriveClientAdapter.axios"></a>
+<a name="GoogleDriveClientAdapter.request"></a>
 
-### GoogleDriveClientAdapter.axios : <code>function</code>
+### GoogleDriveClientAdapter.request : <code>function</code>
 **Kind**: static property of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
-**See**: https://github.com/axios/axios  
+**See**: https://github.com/perry-mitchell/cowl  
 <a name="GoogleDriveClientAdapter.patcher"></a>
 
 ### GoogleDriveClientAdapter.patcher : <code>HotPatcher</code>
@@ -171,17 +171,17 @@ Get directory contents
 **Kind**: global typedef  
 
 * [GoogleDriveClientAdapter](#GoogleDriveClientAdapter) : <code>Object</code>
-    * [.axios](#GoogleDriveClientAdapter.axios) : <code>function</code>
+    * [.request](#GoogleDriveClientAdapter.request) : <code>function</code>
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.putFileContents(options)](#GoogleDriveClientAdapter.putFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
 
-<a name="GoogleDriveClientAdapter.axios"></a>
+<a name="GoogleDriveClientAdapter.request"></a>
 
-### GoogleDriveClientAdapter.axios : <code>function</code>
+### GoogleDriveClientAdapter.request : <code>function</code>
 **Kind**: static property of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
-**See**: https://github.com/axios/axios  
+**See**: https://github.com/perry-mitchell/cowl  
 <a name="GoogleDriveClientAdapter.patcher"></a>
 
 ### GoogleDriveClientAdapter.patcher : <code>HotPatcher</code>
