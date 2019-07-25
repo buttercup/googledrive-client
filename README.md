@@ -58,3 +58,5 @@ client.mapDirectoryContents("/").then(arrayOfFiles => {
     // ...
 })
 ```
+
+**NB:** Items are placed in the root if (and only if) their parents are not resolvable. They may have parent IDs specified in the result - if a parent can be found for a file, it is in that items sub-directory, whereas if the parent cannot be found it is in the root.
