@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v0.4.1
+_2019-07-25_
+
+ * **Bugfix**:
+   * `mapDirectoryContents` would fail on repeated calls: "Cannot read property 'map' of undefined"
+
 ## v0.4.0
 _2019-07-25_
 
