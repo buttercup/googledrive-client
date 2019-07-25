@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.4.0
+_2019-07-25_
+
+ * `mapDirectoryContents` method added for traditional path lookups
+
 ## v0.3.1
 _2019-07-22_
 
