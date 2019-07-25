@@ -88,5 +88,23 @@ describe("directoryContents", function() {
                 });
             });
         });
+
+        it("returns the contents for a sub-directory", function() {
+            return this.client.mapDirectoryContents("/Documents").then(res => {
+                expect(res).to.have.lengthOf(1);
+                expect(res[0]).to.have.property("filename", "Project translation");
+                expect(res[0]).to.have.property("fullPath", "/Documents");
+            });
+        });
+
+        it("uses the cached contents when available", function() {
+            sinon.spy(this.client.patcher, "execute");
+            return this.client
+                .mapDirectoryContents("/Documents")
+                .then(() => this.client.mapDirectoryContents("/Documents"))
+                .then(() => {
+                    expect(this.client.patcher.execute.callCount).to.equal(1);
+                });
+        });
     });
 });

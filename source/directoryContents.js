@@ -126,10 +126,9 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
  * @returns {Promise.<FullPathFileItem[]>}
  */
 function mapDirectoryContents(token, patcher, context, path) {
-    let work = Promise.resolve();
+    let work;
     if (!context[CACHED_DIR_RESULTS_KEY] || (Date.now() - context[CACHED_DIR_RESULTS_KEY].updated > CACHED_DIR_RESULTS_MAX_AGE)) {
-        work = work
-            .then(() => getDirectoryContents(token, patcher, { formTree: false }))
+        work = getDirectoryContents(token, patcher, { formTree: false })
             .then(contents => {
                 if (context[CACHED_DIR_RESULTS_KEY]) {
                     Object.assign(context[CACHED_DIR_RESULTS_KEY], {
@@ -149,6 +148,8 @@ function mapDirectoryContents(token, patcher, context, path) {
                 }
                 return contents;
             });
+    } else {
+        work = Promise.resolve(context[CACHED_DIR_RESULTS_KEY].cachedContents);
     }
     const getFullPath = (contents, itemID, items = []) => {
         const item = contents.find(item => item.id === itemID);
