@@ -68,6 +68,7 @@ function createClient(token) {
          * directories with the same name)
          * @param {String} dirPath The directory to get the contents of
          * @returns {Promise.<FullPathFileItem[]>} An array of file items with full directory paths
+         * @memberof GoogleDriveClientAdapter
          */
         mapDirectoryContents: dirPath => mapDirectoryContents(token, patcher, adapter, dirPath),
         /**
