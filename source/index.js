@@ -1,6 +1,6 @@
 const HotPatcher = require("hot-patcher");
 const { request } = require("cowl");
-const { getDirectoryContents } = require("./directoryContents.js");
+const { getDirectoryContents, mapDirectoryContents } = require("./directoryContents.js");
 const { getFileContents, putFileContents } = require("./fileContents.js");
 
 /**
@@ -33,7 +33,7 @@ function createClient(token) {
     /**
      * @class GoogleDriveClientAdapter
      */
-    return {
+    const adapter = {
         /**
          * @type {Function}
          * @memberof GoogleDriveClientAdapter
@@ -63,6 +63,14 @@ function createClient(token) {
          */
         getFileContents: id => getFileContents(token, patcher, id),
         /**
+         * Get directory contents using a non-standard path
+         * (not guaranteed to work in all environments and ignores duplicate files or
+         * directories with the same name)
+         * @param {String} dirPath The directory to get the contents of
+         * @returns {Promise.<FullPathFileItem[]>} An array of file items with full directory paths
+         */
+        mapDirectoryContents: dirPath => mapDirectoryContents(token, patcher, adapter, dirPath),
+        /**
          * Write contents to a remote file
          * @param {PutFileContentsOptions} options Options for the request
          * @memberof GoogleDriveClientAdapter
@@ -70,6 +78,7 @@ function createClient(token) {
          */
         putFileContents: ({ id, name, parent, contents } = {}) => putFileContents(token, patcher, { id, contents, name, parentID: parent })
     };
+    return adapter;
 }
 
 /**

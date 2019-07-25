@@ -1,5 +1,7 @@
 const { handleError, handleResponse } = require("./helpers.js");
 
+const CACHED_DIR_RESULTS_KEY = "@@dirresults";
+const CACHED_DIR_RESULTS_MAX_AGE = 10000;
 const MIME_FOLDER = "application/vnd.google-apps.folder";
 
 function formulateTree(files) {
@@ -44,6 +46,11 @@ function formulateTree(files) {
  * @property {Array.<String>} parents - An array of parent IDs
  * @property {String} mime - The MIME type
  * @property {String} type - Either "file" or "directory"
+ */
+
+/**
+ * @typedef {FileItem} FullPathFileItem
+ * @property {String} fullPath - The directory path containing this file
  */
 
 /**
@@ -110,6 +117,59 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
         .catch(handleError);
 }
 
+/**
+ * Get directory contents for a non-standard directory path
+ * @param {String} token The OAuth token
+ * @param {HotPatcher} patcher The patcher instance
+ * @param {Object} context The context for memoizing the directory contents results
+ * @param {String} path The path to map for (eg "/images")
+ * @returns {Promise.<FullPathFileItem[]>}
+ */
+function mapDirectoryContents(token, patcher, context, path) {
+    let work = Promise.resolve();
+    if (!context[CACHED_DIR_RESULTS_KEY] || (Date.now() - context[CACHED_DIR_RESULTS_KEY].updated > CACHED_DIR_RESULTS_MAX_AGE)) {
+        work = work
+            .then(() => getDirectoryContents(token, patcher, { formTree: false }))
+            .then(contents => {
+                if (context[CACHED_DIR_RESULTS_KEY]) {
+                    Object.assign(context[CACHED_DIR_RESULTS_KEY], {
+                        cachedContents: contents,
+                        updated: Date.now()
+                    });
+                } else {
+                    Object.defineProperty(context, CACHED_DIR_RESULTS_KEY, {
+                        enumerable: false,
+                        writable: false,
+                        configurable: false,
+                        value: {
+                            cachedContents: contents,
+                            updated: Date.now()
+                        }
+                    });
+                }
+                return contents;
+            });
+    }
+    const getFullPath = (contents, itemID, items = []) => {
+        const item = contents.find(item => item.id === itemID);
+        const [ parentID ] = item.parents;
+        const parentItem = contents.find(item => item.id === parentID);
+        if (parentItem) {
+            return getFullPath(contents, parentID, [parentItem.filename, ...items]);
+        }
+        return items;
+    };
+    const pathsMatch = (pathA, pathB) => pathA.replace(/\/+$/, "") === pathB.replace(/\/+$/, "");
+    return work.then(dirContents =>
+        dirContents
+            .map(item => Object.assign(item, {
+                fullPath: `/${getFullPath(dirContents, item.id).join("/")}`
+            }))
+            .filter(item => pathsMatch(item.fullPath, path))
+    );
+}
+
 module.exports = {
-    getDirectoryContents
+    getDirectoryContents,
+    mapDirectoryContents
 };
