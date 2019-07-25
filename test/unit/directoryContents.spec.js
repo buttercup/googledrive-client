@@ -59,4 +59,34 @@ describe("directoryContents", function() {
             });
         });
     });
+
+    describe("mapDirectoryContents", function() {
+        beforeEach(function() {
+            this.requestSpy = sinon.stub().returns(Promise.resolve({
+                data: testResults,
+                status: 200,
+                statusText: "OK"
+            }));
+            this.client = createClient(FAKE_TOKEN);
+            this.client.patcher.patch("request", this.requestSpy);
+        });
+
+        it("returns the contents for a sub-directory", function() {
+            return this.client.mapDirectoryContents("/Documents").then(res => {
+                expect(res).to.have.lengthOf(1);
+                expect(res[0]).to.have.property("filename", "Project translation");
+                expect(res[0]).to.have.property("fullPath", "/Documents");
+            });
+        });
+
+        it("returns the contents for the root", function() {
+            return this.client.mapDirectoryContents("/").then(res => {
+                expect(res).to.have.length.above(1);
+                res.forEach(item => {
+                    expect(item.filename).to.not.equal("Project translation");
+                    expect(item.fullPath).to.equal("/");
+                });
+            });
+        });
+    });
 });

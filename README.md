@@ -32,7 +32,7 @@ client.getDirectoryContents();
 
 Make sure to check out the [API documentation](API.md) for more information.
 
-### Token Expiration or Invalid Credentials
+### Token expiration or invalid credentials
 
 This library uses [`VError`](https://github.com/joyent/node-verror) to pass extra error information around, such as when authentication fails while making a request. This makes it easier for downstream libraries to handle such authorisation failures, perhaps by requesting a new token.
 
@@ -44,3 +44,19 @@ client.getDirectoryContents().catch(err => {
     // handle authFailure === true
 });
 ```
+
+### Getting directory contents using a path
+
+This library supports fetching directory contents by using a path, for a more traditional field. This method is **not recommended** for all use cases as it doesn't support items in the same level with the _same name_. Consider it experimental.
+
+```javascript
+const { createClient } = require("@buttercup/googledrive-client");
+
+const client = createClient(myToken);
+
+client.mapDirectoryContents("/").then(arrayOfFiles => {
+    // ...
+})
+```
+
+**NB:** Items are placed in the root if (and only if) their parents are not resolvable. They may have parent IDs specified in the result - if a parent can be found for a file, it is in that items sub-directory, whereas if the parent cannot be found it is in the root.

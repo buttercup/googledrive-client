@@ -18,6 +18,9 @@
 <dt><a href="#getDirectoryContents">getDirectoryContents(token, patcher, [options])</a> ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;|FileTreeNode)&gt;</code></dt>
 <dd><p>Get directory contents</p>
 </dd>
+<dt><a href="#mapDirectoryContents">mapDirectoryContents(token, patcher, context, path)</a> ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code></dt>
+<dd><p>Get directory contents for a non-standard directory path</p>
+</dd>
 </dl>
 
 ## Typedefs
@@ -26,6 +29,8 @@
 <dt><a href="#IntGetDirectoryContentsOptions">IntGetDirectoryContentsOptions</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#FileItem">FileItem</a> : <code>Object</code></dt>
+<dd></dd>
+<dt><a href="#FullPathFileItem">FullPathFileItem</a> : <code><a href="#FileItem">FileItem</a></code></dt>
 <dd></dd>
 <dt><a href="#FileTreeNode">FileTreeNode</a> : <code>Object</code></dt>
 <dd></dd>
@@ -62,6 +67,7 @@ Create a new Google Drive client adapter using a token
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.mapDirectoryContents(dirPath)](#GoogleDriveClientAdapter.mapDirectoryContents) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
     * [.putFileContents(options)](#GoogleDriveClientAdapter.putFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="GoogleDriveClientAdapter.request"></a>
@@ -99,6 +105,20 @@ Get the remote contents of a file
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>String</code> | The file ID |
+
+<a name="GoogleDriveClientAdapter.mapDirectoryContents"></a>
+
+### GoogleDriveClientAdapter.mapDirectoryContents(dirPath) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
+Get directory contents using a non-standard path
+(not guaranteed to work in all environments and ignores duplicate files or
+directories with the same name)
+
+**Kind**: static method of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+**Returns**: <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code> - An array of file items with full directory paths  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dirPath | <code>String</code> | The directory to get the contents of |
 
 <a name="GoogleDriveClientAdapter.putFileContents"></a>
 
@@ -127,6 +147,20 @@ Get directory contents
 | patcher | <code>HotPatcher</code> | The patcher instance |
 | [options] | [<code>IntGetDirectoryContentsOptions</code>](#IntGetDirectoryContentsOptions) | Directory contents request options |
 
+<a name="mapDirectoryContents"></a>
+
+## mapDirectoryContents(token, patcher, context, path) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
+Get directory contents for a non-standard directory path
+
+**Kind**: global function  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| token | <code>String</code> | The OAuth token |
+| patcher | <code>HotPatcher</code> | The patcher instance |
+| context | <code>Object</code> | The context for memoizing the directory contents results |
+| path | <code>String</code> | The path to map for (eg "/images") |
+
 <a name="IntGetDirectoryContentsOptions"></a>
 
 ## IntGetDirectoryContentsOptions : <code>Object</code>
@@ -152,6 +186,16 @@ Get directory contents
 | mime | <code>String</code> | The MIME type |
 | type | <code>String</code> | Either "file" or "directory" |
 
+<a name="FullPathFileItem"></a>
+
+## FullPathFileItem : [<code>FileItem</code>](#FileItem)
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| fullPath | <code>String</code> | The directory path containing this file |
+
 <a name="FileTreeNode"></a>
 
 ## FileTreeNode : <code>Object</code>
@@ -175,6 +219,7 @@ Get directory contents
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
+    * [.mapDirectoryContents(dirPath)](#GoogleDriveClientAdapter.mapDirectoryContents) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
     * [.putFileContents(options)](#GoogleDriveClientAdapter.putFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
 
 <a name="GoogleDriveClientAdapter.request"></a>
@@ -212,6 +257,20 @@ Get the remote contents of a file
 | Param | Type | Description |
 | --- | --- | --- |
 | id | <code>String</code> | The file ID |
+
+<a name="GoogleDriveClientAdapter.mapDirectoryContents"></a>
+
+### GoogleDriveClientAdapter.mapDirectoryContents(dirPath) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
+Get directory contents using a non-standard path
+(not guaranteed to work in all environments and ignores duplicate files or
+directories with the same name)
+
+**Kind**: static method of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+**Returns**: <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code> - An array of file items with full directory paths  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| dirPath | <code>String</code> | The directory to get the contents of |
 
 <a name="GoogleDriveClientAdapter.putFileContents"></a>
 
