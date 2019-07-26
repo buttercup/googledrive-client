@@ -18,7 +18,7 @@
 <dt><a href="#getDirectoryContents">getDirectoryContents(token, patcher, [options])</a> ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;|FileTreeNode)&gt;</code></dt>
 <dd><p>Get directory contents</p>
 </dd>
-<dt><a href="#mapDirectoryContents">mapDirectoryContents(token, patcher, context, path)</a> ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code></dt>
+<dt><a href="#mapDirectoryContents">mapDirectoryContents(token, patcher, context, path)</a> ⇒ <code>Promise.&lt;Array.&lt;PosixPathFileItem&gt;&gt;</code></dt>
 <dd><p>Get directory contents for a non-standard directory path</p>
 </dd>
 </dl>
@@ -30,7 +30,7 @@
 <dd></dd>
 <dt><a href="#FileItem">FileItem</a> : <code>Object</code></dt>
 <dd></dd>
-<dt><a href="#FullPathFileItem">FullPathFileItem</a> : <code><a href="#FileItem">FileItem</a></code></dt>
+<dt><a href="#PosixPathFileItem">PosixPathFileItem</a> : <code><a href="#FileItem">FileItem</a></code></dt>
 <dd></dd>
 <dt><a href="#FileTreeNode">FileTreeNode</a> : <code>Object</code></dt>
 <dd></dd>
@@ -149,7 +149,7 @@ Get directory contents
 
 <a name="mapDirectoryContents"></a>
 
-## mapDirectoryContents(token, patcher, context, path) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
+## mapDirectoryContents(token, patcher, context, path) ⇒ <code>Promise.&lt;Array.&lt;PosixPathFileItem&gt;&gt;</code>
 Get directory contents for a non-standard directory path
 
 **Kind**: global function  
@@ -186,15 +186,15 @@ Get directory contents for a non-standard directory path
 | mime | <code>String</code> | The MIME type |
 | type | <code>String</code> | Either "file" or "directory" |
 
-<a name="FullPathFileItem"></a>
+<a name="PosixPathFileItem"></a>
 
-## FullPathFileItem : [<code>FileItem</code>](#FileItem)
+## PosixPathFileItem : [<code>FileItem</code>](#FileItem)
 **Kind**: global typedef  
 **Properties**
 
 | Name | Type | Description |
 | --- | --- | --- |
-| fullPath | <code>String</code> | The directory path containing this file |
+| dirPath | <code>String</code> | The directory path containing this file |
 
 <a name="FileTreeNode"></a>
 

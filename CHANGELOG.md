@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.4.2
+_2019-07-26_
+
+ * Rename `fullPath` to `dirPath` for `mapDirectoryContents` method
+
 ## v0.4.1
 _2019-07-25_
 
