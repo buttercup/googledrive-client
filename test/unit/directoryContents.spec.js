@@ -75,7 +75,7 @@ describe("directoryContents", function() {
             return this.client.mapDirectoryContents("/Documents").then(res => {
                 expect(res).to.have.lengthOf(1);
                 expect(res[0]).to.have.property("filename", "Project translation");
-                expect(res[0]).to.have.property("fullPath", "/Documents");
+                expect(res[0]).to.have.property("dirPath", "/Documents");
             });
         });
 
@@ -84,7 +84,7 @@ describe("directoryContents", function() {
                 expect(res).to.have.length.above(1);
                 res.forEach(item => {
                     expect(item.filename).to.not.equal("Project translation");
-                    expect(item.fullPath).to.equal("/");
+                    expect(item.dirPath).to.equal("/");
                 });
             });
         });
@@ -93,7 +93,7 @@ describe("directoryContents", function() {
             return this.client.mapDirectoryContents("/Documents").then(res => {
                 expect(res).to.have.lengthOf(1);
                 expect(res[0]).to.have.property("filename", "Project translation");
-                expect(res[0]).to.have.property("fullPath", "/Documents");
+                expect(res[0]).to.have.property("dirPath", "/Documents");
             });
         });
 

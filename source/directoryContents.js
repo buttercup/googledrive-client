@@ -49,8 +49,8 @@ function formulateTree(files) {
  */
 
 /**
- * @typedef {FileItem} FullPathFileItem
- * @property {String} fullPath - The directory path containing this file
+ * @typedef {FileItem} PosixPathFileItem
+ * @property {String} dirPath - The directory path containing this file
  */
 
 /**
@@ -123,7 +123,7 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
  * @param {HotPatcher} patcher The patcher instance
  * @param {Object} context The context for memoizing the directory contents results
  * @param {String} path The path to map for (eg "/images")
- * @returns {Promise.<FullPathFileItem[]>}
+ * @returns {Promise.<PosixPathFileItem[]>}
  */
 function mapDirectoryContents(token, patcher, context, path) {
     let work;
@@ -151,12 +151,12 @@ function mapDirectoryContents(token, patcher, context, path) {
     } else {
         work = Promise.resolve(context[CACHED_DIR_RESULTS_KEY].cachedContents);
     }
-    const getFullPath = (contents, itemID, items = []) => {
+    const getDirPath = (contents, itemID, items = []) => {
         const item = contents.find(item => item.id === itemID);
         const [ parentID ] = item.parents;
         const parentItem = contents.find(item => item.id === parentID);
         if (parentItem) {
-            return getFullPath(contents, parentID, [parentItem.filename, ...items]);
+            return getDirPath(contents, parentID, [parentItem.filename, ...items]);
         }
         return items;
     };
@@ -164,9 +164,9 @@ function mapDirectoryContents(token, patcher, context, path) {
     return work.then(dirContents =>
         dirContents
             .map(item => Object.assign(item, {
-                fullPath: `/${getFullPath(dirContents, item.id).join("/")}`
+                dirPath: `/${getDirPath(dirContents, item.id).join("/")}`
             }))
-            .filter(item => pathsMatch(item.fullPath, path))
+            .filter(item => pathsMatch(item.dirPath, path))
     );
 }
 
