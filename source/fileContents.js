@@ -1,3 +1,4 @@
+const Buffer = require("buffer/").Buffer;
 const { handleError, handleResponse } = require("./helpers.js");
 
 const BOUNDARY_MARK = "--";
@@ -60,8 +61,7 @@ function putFileContents(token, patcher, {
             data.push(item.charCodeAt(i) & 0xFF);
         }
     })
-    const ui8a = Uint8Array.from(data);
-    const payload = ui8a.buffer;
+    const payload = Buffer.from(data);
     const options = {
         url,
         method,
