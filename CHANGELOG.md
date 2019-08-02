@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.5.0
+_2019-08-02_
+
+ * Remove dependency on `UInt8Array` by using `buffer` package
+
 ## v0.4.3
 _2019-08-02_
 
