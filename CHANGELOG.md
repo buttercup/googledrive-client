@@ -1,5 +1,12 @@
 # Google Drive Client changelog
 
+## v0.4.3
+_2019-08-02_
+
+ * **Bugfix**:
+   * Re-authorisation failed when response header keys were not all lower-case
+ * Upgrade `cowl` for lower-case response header keys
+
 ## v0.4.2
 _2019-07-26_
 
