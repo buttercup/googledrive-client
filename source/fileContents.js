@@ -6,7 +6,7 @@ const CONTENT_TYPE_TEXT = "Content-Type: text/plain; charset=UTF-8";
 const NEW_LINE = "\r\n";
 
 function getBufferClass() {
-    if (true || typeof Buffer === "undefined" || typeof Buffer.from !== "function") {
+    if (typeof Buffer === "undefined" || typeof Buffer.from !== "function") {
         return require("buffer/").Buffer;
     }
     return Buffer;

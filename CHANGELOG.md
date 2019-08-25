@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.6.1
+_2019-08-25_
+
+ * **Bugfix**: Remove forced-polyfill for `Buffer`
+
 ## v0.6.0
 _2019-08-25_
 
