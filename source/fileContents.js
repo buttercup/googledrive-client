@@ -1,10 +1,16 @@
-const Buffer = require("buffer/").Buffer;
 const { handleError, handleResponse } = require("./helpers.js");
 
 const BOUNDARY_MARK = "--";
 const CONTENT_TYPE_JSON = "Content-Type: application/json; charset=UTF-8";
 const CONTENT_TYPE_TEXT = "Content-Type: text/plain; charset=UTF-8";
 const NEW_LINE = "\r\n";
+
+function getBufferClass() {
+    if (true || typeof Buffer === "undefined" || typeof Buffer.from !== "function") {
+        return require("buffer/").Buffer;
+    }
+    return Buffer;
+}
 
 function getFileContents(token, patcher, id) {
     const options = {
@@ -28,6 +34,7 @@ function putFileContents(token, patcher, {
     contents = "",
     name
 } = {}) {
+    const BufferInstance = getBufferClass();
     const boundary = `BCUP_DRV_UPL_${Math.floor(Math.random() * 1000000)}`;
     const url = id
         ? `https://www.googleapis.com/upload/drive/v3/files/${id}`
@@ -61,7 +68,7 @@ function putFileContents(token, patcher, {
             data.push(item.charCodeAt(i) & 0xFF);
         }
     })
-    const payload = Buffer.from(data);
+    const payload = BufferInstance.from(data);
     const options = {
         url,
         method,
