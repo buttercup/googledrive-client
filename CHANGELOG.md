@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.6.0
+_2019-08-25_
+
+ * Dynamically switch `Buffer` dependency if available
+
 ## v0.5.0
 _2019-08-02_
 
