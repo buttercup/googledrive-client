@@ -25,9 +25,9 @@
   },
   "homepage": "https://github.com/buttercup/googledrive-client#readme",
   "dependencies": {
-    "buffer": "^5.2.1",
     "cowl": "^0.6.0",
     "hot-patcher": "^0.5.0",
+    "safe-buffer": "^5.2.0",
     "verror": "^1.10.0"
   },
   "devDependencies": {
