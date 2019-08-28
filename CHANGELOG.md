@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.7.0
+_2019-08-28_
+
+ * Replace `buffer` with `safe-buffer` for React-Native compatibility
+
 ## v0.6.1
 _2019-08-25_
 
