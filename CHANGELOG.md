@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v0.8.0
+_2019-09-22_
+
+ * `deleteFile` method
+
 ## v0.7.1
 _2019-09-22_
 

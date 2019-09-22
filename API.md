@@ -65,6 +65,7 @@ Create a new Google Drive client adapter using a token
 * [GoogleDriveClientAdapter](#GoogleDriveClientAdapter)
     * [.request](#GoogleDriveClientAdapter.request) : <code>function</code>
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
+    * [.deleteFile(id)](#GoogleDriveClientAdapter.deleteFile) ⇒ <code>Promise</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.mapDirectoryContents(dirPath)](#GoogleDriveClientAdapter.mapDirectoryContents) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
@@ -79,6 +80,17 @@ Create a new Google Drive client adapter using a token
 
 ### GoogleDriveClientAdapter.patcher : <code>HotPatcher</code>
 **Kind**: static property of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+<a name="GoogleDriveClientAdapter.deleteFile"></a>
+
+### GoogleDriveClientAdapter.deleteFile(id) ⇒ <code>Promise</code>
+Delete a remote file
+
+**Kind**: static method of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>String</code> | The file ID |
+
 <a name="GoogleDriveClientAdapter.getDirectoryContents"></a>
 
 ### GoogleDriveClientAdapter.getDirectoryContents([options]) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
@@ -217,6 +229,7 @@ Get directory contents for a non-standard directory path
 * [GoogleDriveClientAdapter](#GoogleDriveClientAdapter) : <code>Object</code>
     * [.request](#GoogleDriveClientAdapter.request) : <code>function</code>
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
+    * [.deleteFile(id)](#GoogleDriveClientAdapter.deleteFile) ⇒ <code>Promise</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.mapDirectoryContents(dirPath)](#GoogleDriveClientAdapter.mapDirectoryContents) ⇒ <code>Promise.&lt;Array.&lt;FullPathFileItem&gt;&gt;</code>
@@ -231,6 +244,17 @@ Get directory contents for a non-standard directory path
 
 ### GoogleDriveClientAdapter.patcher : <code>HotPatcher</code>
 **Kind**: static property of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+<a name="GoogleDriveClientAdapter.deleteFile"></a>
+
+### GoogleDriveClientAdapter.deleteFile(id) ⇒ <code>Promise</code>
+Delete a remote file
+
+**Kind**: static method of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>String</code> | The file ID |
+
 <a name="GoogleDriveClientAdapter.getDirectoryContents"></a>
 
 ### GoogleDriveClientAdapter.getDirectoryContents([options]) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
