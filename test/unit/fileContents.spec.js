@@ -6,6 +6,32 @@ const testResults = require("./resources/directoryContentsResponse.json");
 const FAKE_TOKEN = "aaaaabbbbbbccccccddddddeeeeee";
 
 describe("fileContents", function() {
+    describe("deleteFile", function() {
+        beforeEach(function() {
+            this.requestSpy = sinon.stub().returns(Promise.resolve({
+                data: "",
+                status: 200,
+                statusText: "OK"
+            }));
+            this.client = createClient(FAKE_TOKEN);
+            this.client.patcher.patch("request", this.requestSpy);
+        });
+
+        it("uses correct HTTP method", function() {
+            return this.client.deleteFile("xxx").then(() => {
+                const reqParams = this.requestSpy.firstCall.args[0];
+                expect(reqParams).to.have.property("method", "DELETE");
+            });
+        });
+
+        it("passes correct file ID", function() {
+            return this.client.deleteFile("xx3x").then(() => {
+                const reqParams = this.requestSpy.firstCall.args[0];
+                expect(reqParams).to.have.property("url").to.match(/\/xx3x$/);
+            });
+        });
+    });
+
     describe("getFileContents", function() {
         beforeEach(function() {
             this.requestSpy = sinon.stub().returns(Promise.resolve({
