@@ -5,6 +5,19 @@ const CONTENT_TYPE_JSON = "Content-Type: application/json; charset=UTF-8";
 const CONTENT_TYPE_TEXT = "Content-Type: text/plain; charset=UTF-8";
 const NEW_LINE = "\r\n";
 
+function deleteFile(token, patcher, id) {
+    const options = {
+        url: `https://www.googleapis.com/drive/v3/files/${id}`,
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
+    return patcher.execute("request", options)
+        .then(() => {})
+        .catch(handleError);
+}
+
 function getBufferClass() {
     return require("safe-buffer").Buffer;
 }
@@ -85,6 +98,7 @@ function putFileContents(token, patcher, {
 }
 
 module.exports = {
+    deleteFile,
     getFileContents,
     putFileContents
 };

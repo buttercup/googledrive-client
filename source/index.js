@@ -1,7 +1,7 @@
 const HotPatcher = require("hot-patcher");
 const { request } = require("cowl");
 const { getDirectoryContents, mapDirectoryContents } = require("./directoryContents.js");
-const { getFileContents, putFileContents } = require("./fileContents.js");
+const { deleteFile, getFileContents, putFileContents } = require("./fileContents.js");
 
 /**
  * @typedef {Object} GoogleDriveClientAdapter
@@ -45,6 +45,13 @@ function createClient(token) {
          * @memberof GoogleDriveClientAdapter
          */
         patcher,
+        /**
+         * Delete a remote file
+         * @param {String} id The file ID
+         * @returns {Promise}
+         * @memberof GoogleDriveClientAdapter
+         */
+        deleteFile: id => deleteFile(token, patcher, id),
         /**
          * Get the remote contents
          * (Fetches all of the remote file tree)
