@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v0.7.1
+_2019-09-22_
+
+ * **Bugfix**:
+   * Size would be `NaN` for some items
+
 ## v0.7.0
 _2019-08-28_
 
