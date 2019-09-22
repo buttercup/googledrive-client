@@ -102,7 +102,7 @@ function getDirectoryContents(token, patcher, { currentFiles = [], nextPageToken
                         created: googleFile.createdTime,
                         modified: googleFile.modifiedTime,
                         shared: googleFile.shared,
-                        size: parseInt(googleFile.size, 10)
+                        size: googleFile.size ? parseInt(googleFile.size, 10) : 0
                     }))
             ];
             if (result.nextPageToken) {
