@@ -8,6 +8,10 @@
     "test": "npm run test:unit",
     "test:unit": "nyc mocha -r test/index.js 'test/unit/**/*.spec.js'"
   },
+  "files": [
+    "source/**/*.js",
+    "*.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/buttercup/googledrive-client.git"
