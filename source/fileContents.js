@@ -1,6 +1,8 @@
+const { encode: encodeBase64 } = require("js-base64");
 const { handleError, handleResponse } = require("./helpers.js");
 
 const BOUNDARY_MARK = "--";
+const CONTENT_ENCODING = "Content-Transfer-Encoding: base64";
 const CONTENT_TYPE_JSON = "Content-Type: application/json; charset=UTF-8";
 const CONTENT_TYPE_TEXT = "Content-Type: text/plain; charset=UTF-8";
 const NEW_LINE = "\r\n";
@@ -16,10 +18,6 @@ function deleteFile(token, patcher, id) {
     return patcher.execute("request", options)
         .then(() => {})
         .catch(handleError);
-}
-
-function getBufferClass() {
-    return require("safe-buffer").Buffer;
 }
 
 function getFileContents(token, patcher, id) {
@@ -44,7 +42,6 @@ function putFileContents(token, patcher, {
     contents = "",
     name
 } = {}) {
-    const BufferInstance = getBufferClass();
     const boundary = `BCUP_DRV_UPL_${Math.floor(Math.random() * 1000000)}`;
     const url = id
         ? `https://www.googleapis.com/upload/drive/v3/files/${id}`
@@ -66,19 +63,20 @@ function putFileContents(token, patcher, {
     ].join("");
     const postDataFile = [
         NEW_LINE, BOUNDARY_MARK, boundary, NEW_LINE,
-        CONTENT_TYPE_TEXT, NEW_LINE, NEW_LINE
+        CONTENT_TYPE_TEXT, NEW_LINE,
+        CONTENT_ENCODING, NEW_LINE, NEW_LINE
     ].join("");
     const postDataEnd = [
         NEW_LINE, BOUNDARY_MARK, boundary, BOUNDARY_MARK, NEW_LINE
     ].join("");
     const size = postDataMeta.length + metadata.length + postDataFile.length + contents.length + postDataEnd.length;
     const data = [];
-    [postDataMeta, metadata, postDataFile, contents, postDataEnd].forEach(item => {
+    [postDataMeta, metadata, postDataFile, encodeBase64(contents), postDataEnd].forEach(item => {
         for (let i = 0; i < item.length; i += 1) {
             data.push(item.charCodeAt(i) & 0xFF);
         }
     })
-    const payload = BufferInstance.from(data);
+    const payload = (new Uint8Array(data)).buffer;
     const options = {
         url,
         method,

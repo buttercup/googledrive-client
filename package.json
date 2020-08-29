@@ -27,8 +27,8 @@
   "dependencies": {
     "cowl": "^0.6.0",
     "hot-patcher": "^0.5.0",
-    "safe-buffer": "^5.2.0",
-    "verror": "^1.10.0"
+    "js-base64": "^3.4.5",
+    "layerr": "^0.1.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",

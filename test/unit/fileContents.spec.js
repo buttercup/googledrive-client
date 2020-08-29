@@ -1,5 +1,5 @@
 const HotPatcher = require("hot-patcher");
-const VError = require("verror");
+const { Layerr } = require("layerr");
 const { createClient } = require("../../source/index.js");
 const testResults = require("./resources/directoryContentsResponse.json");
 
@@ -61,7 +61,7 @@ describe("fileContents", function() {
             return this.client.getFileContents("abc").then(res => {
                 throw new Error("Request should have failed");
             }).catch(err => {
-                const info = VError.info(err);
+                const info = Layerr.info(err);
                 expect(info).to.have.property("authFailure", true);
             });
         });
