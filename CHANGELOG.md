@@ -1,8 +1,12 @@
 # Google Drive Client changelog
 
-## v1.0.0
+## v1.1.0
 _2020-08-29_
 
+ * Upgrade `cowl` - remove `buffer` dependency
+
+## v1.0.0
+_2020-08-29_
  * Remove `safe-buffer` (and `buffer`) dependencies
  * Encode file contents as base64 before sending
  * Drop support for NodeJS < 10
