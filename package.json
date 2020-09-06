@@ -1,6 +1,6 @@
 {
   "name": "@buttercup/googledrive-client",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Basic client for Google Drive",
   "main": "source/index.js",
   "scripts": {
