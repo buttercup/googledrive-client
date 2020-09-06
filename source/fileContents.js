@@ -1,5 +1,4 @@
-const { encode: encodeBase64 } = require("js-base64");
-const { handleError, handleResponse } = require("./helpers.js");
+const { encodeBase64, handleError, handleResponse } = require("./helpers.js");
 
 const BOUNDARY_MARK = "--";
 const CONTENT_ENCODING = "Content-Transfer-Encoding: base64";
