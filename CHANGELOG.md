@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v1.2.0
+_2020-09-06_
+
+ * Replace `js-base64` with `base64-js` (to remove `Buffer` reference)
+
 ## v1.1.0
 _2020-08-29_
 
