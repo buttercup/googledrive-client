@@ -1,7 +1,5 @@
-const HotPatcher = require("hot-patcher");
 const { Layerr } = require("layerr");
 const { createClient } = require("../../source/index.js");
-const testResults = require("./resources/directoryContentsResponse.json");
 
 const FAKE_TOKEN = "aaaaabbbbbbccccccddddddeeeeee";
 
