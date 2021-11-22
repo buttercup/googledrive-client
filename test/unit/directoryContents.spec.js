@@ -1,4 +1,3 @@
-const HotPatcher = require("hot-patcher");
 const { createClient } = require("../../source/index.js");
 const testResults = require("./resources/directoryContentsResponse.json");
 

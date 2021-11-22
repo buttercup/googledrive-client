@@ -1,8 +1,8 @@
-const { handleError, handleResponse } = require("./helpers.js");
+const { handleError } = require("./helpers.js");
+const { MIME_FOLDER } = require("./symbols.js");
 
 const CACHED_DIR_RESULTS_KEY = "@@dirresults";
 const CACHED_DIR_RESULTS_MAX_AGE = 10000;
-const MIME_FOLDER = "application/vnd.google-apps.folder";
 
 function formulateTree(files) {
     // 1st pass: Collect all IDs

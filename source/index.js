@@ -2,9 +2,17 @@ const HotPatcher = require("hot-patcher");
 const { request } = require("cowl");
 const { getDirectoryContents, mapDirectoryContents } = require("./directoryContents.js");
 const { deleteFile, getFileContents, putFileContents } = require("./fileContents.js");
+const { createDirectory } = require("./createDirectory.js");
 
 /**
  * @typedef {Object} GoogleDriveClientAdapter
+ */
+
+/**
+ * @typedef {Object} CreateDirectoryOptions
+ * @property {String} name The name of the new directory
+ * @property {String=} parent The ID of the parent directory, or
+ *  none if creating in root
  */
 
 /**
@@ -45,6 +53,13 @@ function createClient(token) {
          * @memberof GoogleDriveClientAdapter
          */
         patcher,
+        /**
+         * Create a new folder
+         * @param {CreateDirectoryOptions} options Creation options
+         * @memberof GoogleDriveClientAdapter
+         * @returns {Promise.<String>} A promise that resolves with the directory's ID
+         */
+        createDirectory: ({ name, parent } = {}) => createDirectory(token, patcher, { parentID: parent, name }),
         /**
          * Delete a remote file
          * @param {String} id The file ID
