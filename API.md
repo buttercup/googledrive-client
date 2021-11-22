@@ -36,6 +36,8 @@
 <dd></dd>
 <dt><a href="#GoogleDriveClientAdapter">GoogleDriveClientAdapter</a> : <code>Object</code></dt>
 <dd></dd>
+<dt><a href="#CreateDirectoryOptions">CreateDirectoryOptions</a> : <code>Object</code></dt>
+<dd></dd>
 <dt><a href="#GetDirectoryContentsOptions">GetDirectoryContentsOptions</a> : <code>Object</code></dt>
 <dd></dd>
 <dt><a href="#PutFileContentsOptions">PutFileContentsOptions</a> : <code>Object</code></dt>
@@ -65,6 +67,7 @@ Create a new Google Drive client adapter using a token
 * [GoogleDriveClientAdapter](#GoogleDriveClientAdapter)
     * [.request](#GoogleDriveClientAdapter.request) : <code>function</code>
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
+    * [.createDirectory(options)](#GoogleDriveClientAdapter.createDirectory) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.deleteFile(id)](#GoogleDriveClientAdapter.deleteFile) ⇒ <code>Promise</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
@@ -80,6 +83,18 @@ Create a new Google Drive client adapter using a token
 
 ### GoogleDriveClientAdapter.patcher : <code>HotPatcher</code>
 **Kind**: static property of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+<a name="GoogleDriveClientAdapter.createDirectory"></a>
+
+### GoogleDriveClientAdapter.createDirectory(options) ⇒ <code>Promise.&lt;String&gt;</code>
+Create a new folder
+
+**Kind**: static method of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - A promise that resolves with the directory's ID  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | [<code>CreateDirectoryOptions</code>](#CreateDirectoryOptions) | Creation options |
+
 <a name="GoogleDriveClientAdapter.deleteFile"></a>
 
 ### GoogleDriveClientAdapter.deleteFile(id) ⇒ <code>Promise</code>
@@ -229,6 +244,7 @@ Get directory contents for a non-standard directory path
 * [GoogleDriveClientAdapter](#GoogleDriveClientAdapter) : <code>Object</code>
     * [.request](#GoogleDriveClientAdapter.request) : <code>function</code>
     * [.patcher](#GoogleDriveClientAdapter.patcher) : <code>HotPatcher</code>
+    * [.createDirectory(options)](#GoogleDriveClientAdapter.createDirectory) ⇒ <code>Promise.&lt;String&gt;</code>
     * [.deleteFile(id)](#GoogleDriveClientAdapter.deleteFile) ⇒ <code>Promise</code>
     * [.getDirectoryContents([options])](#GoogleDriveClientAdapter.getDirectoryContents) ⇒ <code>Promise.&lt;(Array.&lt;FileItem&gt;\|FileTreeNode)&gt;</code>
     * [.getFileContents(id)](#GoogleDriveClientAdapter.getFileContents) ⇒ <code>Promise.&lt;String&gt;</code>
@@ -244,6 +260,18 @@ Get directory contents for a non-standard directory path
 
 ### GoogleDriveClientAdapter.patcher : <code>HotPatcher</code>
 **Kind**: static property of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+<a name="GoogleDriveClientAdapter.createDirectory"></a>
+
+### GoogleDriveClientAdapter.createDirectory(options) ⇒ <code>Promise.&lt;String&gt;</code>
+Create a new folder
+
+**Kind**: static method of [<code>GoogleDriveClientAdapter</code>](#GoogleDriveClientAdapter)  
+**Returns**: <code>Promise.&lt;String&gt;</code> - A promise that resolves with the directory's ID  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | [<code>CreateDirectoryOptions</code>](#CreateDirectoryOptions) | Creation options |
+
 <a name="GoogleDriveClientAdapter.deleteFile"></a>
 
 ### GoogleDriveClientAdapter.deleteFile(id) ⇒ <code>Promise</code>
@@ -307,6 +335,17 @@ Write contents to a remote file
 | Param | Type | Description |
 | --- | --- | --- |
 | options | [<code>PutFileContentsOptions</code>](#PutFileContentsOptions) | Options for the request |
+
+<a name="CreateDirectoryOptions"></a>
+
+## CreateDirectoryOptions : <code>Object</code>
+**Kind**: global typedef  
+**Properties**
+
+| Name | Type | Description |
+| --- | --- | --- |
+| name | <code>String</code> | The name of the new directory |
+| [parent] | <code>String</code> | The ID of the parent directory, or  none if creating in root |
 
 <a name="GetDirectoryContentsOptions"></a>
 
