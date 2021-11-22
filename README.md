@@ -5,7 +5,7 @@
 
 ## About
 
-This library allows for performing basic actions against Google's RESTful Drive API. It supports **fetching directory contents**, **reading** files and **writing** files. Note that file reading & writing is only supported with text files currently. It uses [axios](https://github.com/axios/axios) to perform requests, which has been proven to be a stable cross-platform library perfect for this purpose.
+This library allows for performing basic actions against Google's RESTful Drive API. It supports **fetching directory contents**, **reading** files and **writing** files. Note that file reading & writing is only supported with text files currently. It uses [cowl](https://github.com/perry-mitchell/cowl) to perform requests, which has been proven to be a stable cross-platform library perfect for this purpose.
 
 ## Usage
 
