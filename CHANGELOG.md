@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v1.3.0
+_2021-11-22_
+
+ * `createDirectory` method
+
 ## v1.2.0
 _2020-09-06_
 
