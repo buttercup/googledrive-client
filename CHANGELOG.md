@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v1.3.1
+_2022-01-29_
+
+ * **Bugfix**:
+   * `cowl`: Handle `null` response headers in request error
+
 ## v1.3.0
 _2021-11-22_
 
