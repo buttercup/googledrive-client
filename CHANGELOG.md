@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v1.3.3
+_2022-01-30_
+
+ * `cowl` upgrade for `Layerr` info pass-through
+
 ## v1.3.2
 _2022-01-30_
 
