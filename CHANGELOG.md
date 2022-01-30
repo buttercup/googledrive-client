@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v1.3.2
+_2022-01-30_
+
+ * **Bugfix**:
+   * Revert `is-in-browser` for `cowl`
+
 ## v1.3.1
 _2022-01-29_
 
