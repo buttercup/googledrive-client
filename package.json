@@ -30,7 +30,7 @@
   "homepage": "https://github.com/buttercup/googledrive-client#readme",
   "dependencies": {
     "base64-js": "^1.5.1",
-    "cowl": "^1.0.3",
+    "cowl": "^1.1.0",
     "hot-patcher": "^0.5.0",
     "layerr": "^0.1.2"
   },
