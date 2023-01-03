@@ -1,4 +1,15 @@
-const { encodeBase64, handleError } = require("./helpers.js");
+import { HotPatcher } from "hot-patcher";
+import { handleBadResponse, RequestConfig } from "../request.js";
+import { encodeBase64 } from "../util/encoding.js";
+
+export interface InternalPutFileContentsOptions {
+    contents: string;
+    id: string;
+    name: string;
+    parentID: string;
+    patcher: HotPatcher;
+    token: string;
+}
 
 const BOUNDARY_MARK = "--";
 const CONTENT_ENCODING = "Content-Transfer-Encoding: base64";
@@ -6,41 +17,15 @@ const CONTENT_TYPE_JSON = "Content-Type: application/json; charset=UTF-8";
 const CONTENT_TYPE_TEXT = "Content-Type: text/plain; charset=UTF-8";
 const NEW_LINE = "\r\n";
 
-function deleteFile(token, patcher, id) {
-    const options = {
-        url: `https://www.googleapis.com/drive/v3/files/${id}`,
-        method: "DELETE",
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
-    return patcher.execute("request", options)
-        .then(() => {})
-        .catch(handleError);
-}
-
-function getFileContents(token, patcher, id) {
-    const options = {
-        url: `https://www.googleapis.com/drive/v3/files/${id}`,
-        method: "GET",
-        query: {
-            alt: "media"
-        },
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    };
-    return patcher.execute("request", options)
-        .then(resp => resp.data)
-        .catch(handleError);
-}
-
-function putFileContents(token, patcher, {
-    parentID,
-    id,
-    contents = "",
-    name
-} = {}) {
+export async function putFileContents(options: InternalPutFileContentsOptions): Promise<string> {
+    const {
+        contents,
+        id,
+        name,
+        parentID,
+        patcher,
+        token
+    } = options;
     const boundary = `BCUP_DRV_UPL_${Math.floor(Math.random() * 1000000)}`;
     const url = id
         ? `https://www.googleapis.com/upload/drive/v3/files/${id}`
@@ -48,7 +33,7 @@ function putFileContents(token, patcher, {
     const method = id
         ? "PATCH"
         : "POST";
-    const rawMetadata = {};
+    const rawMetadata: Record<string, string | Array<string>> = {};
     if (parentID) {
         rawMetadata.parents = [parentID];
     }
@@ -76,7 +61,7 @@ function putFileContents(token, patcher, {
         }
     })
     const payload = (new Uint8Array(data)).buffer;
-    const options = {
+    const config: RequestConfig = {
         url,
         method,
         query: {
@@ -89,13 +74,8 @@ function putFileContents(token, patcher, {
         },
         body: payload
     };
-    return patcher.execute("request", options)
-        .then(res => res.data.id)
-        .catch(handleError);
+    const response = await patcher.execute<Promise<Response>>("request", config);
+    handleBadResponse(response);
+    const { id: newID } = await response.json();
+    return newID;
 }
-
-module.exports = {
-    deleteFile,
-    getFileContents,
-    putFileContents
-};

@@ -1,5 +1,7 @@
-const { createClient } = require("../../source/index.js");
-const testResults = require("./resources/directoryContentsResponse.json");
+import sinon from "sinon";
+import { expect } from "chai";
+import { GoogleDriveClient } from "../../dist/index.js";
+import testResults from "./resources/directoryContentsResponse.json" assert { type: "json" };
 
 const FAKE_TOKEN = "aaaaabbbbbbccccccddddddeeeeee";
 
@@ -7,11 +9,12 @@ describe("directoryContents", function() {
     describe("getDirectoryContents", function() {
         beforeEach(function() {
             this.requestSpy = sinon.stub().returns(Promise.resolve({
-                data: testResults,
+                json: () => Promise.resolve(testResults),
+                ok: true,
                 status: 200,
                 statusText: "OK"
             }));
-            this.client = createClient(FAKE_TOKEN);
+            this.client = new GoogleDriveClient(FAKE_TOKEN);
             this.client.patcher.patch("request", this.requestSpy);
         });
 
@@ -42,7 +45,7 @@ describe("directoryContents", function() {
         });
 
         it("returns an array of file results when tree:false", function() {
-            return this.client.getDirectoryContents({ tree: false }).then(res => {
+            return this.client.getDirectoryContents(false).then(res => {
                 const [file] = res;
                 expect(file).to.have.property("id").that.is.a("string");
                 expect(file).to.have.property("filename").that.is.a("string");
@@ -62,11 +65,12 @@ describe("directoryContents", function() {
     describe("mapDirectoryContents", function() {
         beforeEach(function() {
             this.requestSpy = sinon.stub().returns(Promise.resolve({
-                data: testResults,
+                json: () => Promise.resolve(testResults),
+                ok: true,
                 status: 200,
                 statusText: "OK"
             }));
-            this.client = createClient(FAKE_TOKEN);
+            this.client = new GoogleDriveClient(FAKE_TOKEN);
             this.client.patcher.patch("request", this.requestSpy);
         });
 

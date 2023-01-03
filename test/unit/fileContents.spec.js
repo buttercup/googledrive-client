@@ -1,5 +1,10 @@
-const { Layerr } = require("layerr");
-const { createClient } = require("../../source/index.js");
+import sinon from "sinon";
+import { expect } from "chai";
+import _Layerr from "layerr";
+import { Headers } from "fetch-headers";
+import { GoogleDriveClient } from "../../dist/index.js";
+
+const { Layerr } = _Layerr;
 
 const FAKE_TOKEN = "aaaaabbbbbbccccccddddddeeeeee";
 
@@ -7,11 +12,12 @@ describe("fileContents", function() {
     describe("deleteFile", function() {
         beforeEach(function() {
             this.requestSpy = sinon.stub().returns(Promise.resolve({
-                data: "",
+                ok: true,
+                text: () => Promise.resolve(""),
                 status: 200,
                 statusText: "OK"
             }));
-            this.client = createClient(FAKE_TOKEN);
+            this.client = new GoogleDriveClient(FAKE_TOKEN);
             this.client.patcher.patch("request", this.requestSpy);
         });
 
@@ -33,11 +39,12 @@ describe("fileContents", function() {
     describe("getFileContents", function() {
         beforeEach(function() {
             this.requestSpy = sinon.stub().returns(Promise.resolve({
-                data: "test\ncontents",
+                text: () => Promise.resolve("test\ncontents"),
+                ok: true,
                 status: 200,
                 statusText: "OK"
             }));
-            this.client = createClient(FAKE_TOKEN);
+            this.client = new GoogleDriveClient(FAKE_TOKEN);
             this.client.patcher.patch("request", this.requestSpy);
         });
 
@@ -48,14 +55,18 @@ describe("fileContents", function() {
         });
 
         it("includes auth flag if error failed due to authorization", function() {
-            const failureError = new Error("Request failed: 401 Unauthorized");
-            failureError.status = 401;
-            failureError.statusText = "Unauthorized";
-            failureError.responseHeaders = {
-                "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
-            };
-            failureError.responseBody = `{"error":{"errors":[{"domain":"global","reason":"authError","message":"Invalid Credentials","locationType":"header","location":"Authorization"}],"code":401,"message":"Invalid Credentials"}}`;
-            this.requestSpy.returns(Promise.reject(failureError))
+            this.requestSpy = sinon.stub().returns(Promise.resolve({
+                text: () => Promise.resolve(
+                    `{"error":{"errors":[{"domain":"global","reason":"authError","message":"Invalid Credentials","locationType":"header","location":"Authorization"}],"code":401,"message":"Invalid Credentials"}}`
+                ),
+                ok: false,
+                headers: new Headers({
+                    "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
+                }),
+                status: 401,
+                statusText: "Unauthorized"
+            }));
+            this.client.patcher.patch("request", this.requestSpy);
             return this.client.getFileContents("abc").then(res => {
                 throw new Error("Request should have failed");
             }).catch(err => {
