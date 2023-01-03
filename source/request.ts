@@ -15,13 +15,22 @@ export interface RequestConfig {
 
 export function handleBadResponse(response: Response): void {
     if (!response.ok) {
-        throw new Layerr({
+        const error = new Layerr({
             info: {
                 status: response.status,
                 statusText: response.statusText,
                 url: response.url
             }
         }, `Request failed: ${response.status} ${response.statusText}`);
+        if (response.headers.get("www-authenticate")) {
+            throw new Layerr({
+                cause: error,
+                info: {
+                    authFailure: /error=invalid_token/.test(response.headers.get("www-authenticate"))
+                }
+            }, "Bad authentication");
+        }
+        throw error;
     }
 }
 

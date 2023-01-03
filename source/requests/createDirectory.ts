@@ -1,7 +1,9 @@
 import { HotPatcher } from "hot-patcher";
-import { Layerr } from "layerr";
+import _Layerr from "layerr";
 import { handleBadResponse, RequestConfig } from "../request.js";
 import { MIME_FOLDER, URL_CREATE_DIRECTORY } from "../symbols.js";
+
+const { Layerr } = _Layerr;
 
 export interface InternalCreateDirectoryOptions {
     name: string;

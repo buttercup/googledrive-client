@@ -78,7 +78,7 @@ export async function getDirectoryContents(options: InternalGetDirectoryContents
         return getDirectoryContents({
             currentFiles: files,
             nextPageToken: result.nextPageToken,
-            formTree: formTree ? true : false,
+            formTree: formTree,
             patcher,
             token
         });

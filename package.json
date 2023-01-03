@@ -10,7 +10,7 @@
     "clean": "rimraf dist",
     "prepublishOnly": "npm run build",
     "test": "npm run test:unit",
-    "test:unit": "nyc mocha -r test/index.js 'test/unit/**/*.spec.js'"
+    "test:unit": "npm run build && c8 --src ./dist --check-coverage --lines 70 --functions 80 --branches 92 --statements 70 mocha 'test/unit/**/*.spec.js'"
   },
   "files": [
     "dist/**/*"
@@ -40,9 +40,10 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
+    "c8": "^7.12.0",
     "chai": "^4.3.4",
+    "fetch-headers": "^3.0.1",
     "mocha": "^9.1.3",
-    "nyc": "^15.1.0",
     "rimraf": "^3.0.2",
     "sinon": "^12.0.1",
     "typescript": "^4.9.4"
