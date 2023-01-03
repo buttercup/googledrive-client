@@ -1,5 +1,13 @@
 # Google Drive Client changelog
 
+## v2.0.0
+_2022-12-26_
+
+ * **Major Release**
+   * ESM-only release
+   * `fetch` for requests, instead of `cowl`/`XMLHttpRequest`
+   * Simplifed client method options
+
 ## v1.3.3
 _2022-01-30_
 
