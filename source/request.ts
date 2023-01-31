@@ -15,20 +15,28 @@ export interface RequestConfig {
 
 export function handleBadResponse(response: Response): void {
     if (!response.ok) {
-        const error = new Layerr({
-            info: {
-                status: response.status,
-                statusText: response.statusText,
-                url: response.url
-            }
-        }, `Request failed: ${response.status} ${response.statusText}`);
-        if (response.headers.get("www-authenticate")) {
-            throw new Layerr({
-                cause: error,
+        const error = new Layerr(
+            {
                 info: {
-                    authFailure: /error=invalid_token/.test(response.headers.get("www-authenticate"))
+                    status: response.status,
+                    statusText: response.statusText,
+                    url: response.url
                 }
-            }, "Bad authentication");
+            },
+            `Request failed: ${response.status} ${response.statusText}`
+        );
+        if (response.headers.get("www-authenticate")) {
+            throw new Layerr(
+                {
+                    cause: error,
+                    info: {
+                        authFailure: /error=invalid_token/.test(
+                            response.headers.get("www-authenticate")
+                        )
+                    }
+                },
+                "Bad authentication"
+            );
         }
         throw error;
     }
@@ -37,10 +45,7 @@ export function handleBadResponse(response: Response): void {
 export async function request(config: RequestConfig): Promise<Response> {
     const url = new URL(config.url);
     if (config.query) {
-        const newQuery = Object.assign(
-            url.query || {},
-            config.query
-        );
+        const newQuery = Object.assign(url.query || {}, config.query);
         url.set("query", newQuery);
     }
     const response = await fetch(url.toString(), {

@@ -35,12 +35,21 @@ export function formulateTree(files: FileItem[]): FileTreeNode {
         id: item ? item.id : null,
         filename: item ? item.filename : null,
         files: !item
-            ? files.filter(file => file.type === "file" && (file.parents.length === 0 || file.parents.some(parentID => rootIDs.indexOf(parentID) >= 0)))
+            ? files.filter(
+                  file =>
+                      file.type === "file" &&
+                      (file.parents.length === 0 ||
+                          file.parents.some(parentID => rootIDs.indexOf(parentID) >= 0))
+              )
             : files.filter(file => file.type === "file" && file.parents.indexOf(item.id) >= 0),
-        children: (
-            !item
-                ? files.filter(file => file.type === "directory" && (file.parents.length === 0 || file.parents.some(parentID => rootIDs.indexOf(parentID) >= 0)))
-                : files.filter(file => file.type === "directory" && file.parents.indexOf(item.id) >= 0)
+        children: (!item
+            ? files.filter(
+                  file =>
+                      file.type === "directory" &&
+                      (file.parents.length === 0 ||
+                          file.parents.some(parentID => rootIDs.indexOf(parentID) >= 0))
+              )
+            : files.filter(file => file.type === "directory" && file.parents.indexOf(item.id) >= 0)
         ).map(child => getLevel(child))
     });
     return getLevel();

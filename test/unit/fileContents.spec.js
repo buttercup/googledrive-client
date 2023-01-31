@@ -8,71 +8,83 @@ const { Layerr } = _Layerr;
 
 const FAKE_TOKEN = "aaaaabbbbbbccccccddddddeeeeee";
 
-describe("fileContents", function() {
-    describe("deleteFile", function() {
-        beforeEach(function() {
-            this.requestSpy = sinon.stub().returns(Promise.resolve({
-                ok: true,
-                text: () => Promise.resolve(""),
-                status: 200,
-                statusText: "OK"
-            }));
+describe("fileContents", function () {
+    describe("deleteFile", function () {
+        beforeEach(function () {
+            this.requestSpy = sinon.stub().returns(
+                Promise.resolve({
+                    ok: true,
+                    text: () => Promise.resolve(""),
+                    status: 200,
+                    statusText: "OK"
+                })
+            );
             this.client = new GoogleDriveClient(FAKE_TOKEN);
             this.client.patcher.patch("request", this.requestSpy);
         });
 
-        it("uses correct HTTP method", function() {
+        it("uses correct HTTP method", function () {
             return this.client.deleteFile("xxx").then(() => {
                 const reqParams = this.requestSpy.firstCall.args[0];
                 expect(reqParams).to.have.property("method", "DELETE");
             });
         });
 
-        it("passes correct file ID", function() {
+        it("passes correct file ID", function () {
             return this.client.deleteFile("xx3x").then(() => {
                 const reqParams = this.requestSpy.firstCall.args[0];
-                expect(reqParams).to.have.property("url").to.match(/\/xx3x$/);
+                expect(reqParams)
+                    .to.have.property("url")
+                    .to.match(/\/xx3x$/);
             });
         });
     });
 
-    describe("getFileContents", function() {
-        beforeEach(function() {
-            this.requestSpy = sinon.stub().returns(Promise.resolve({
-                text: () => Promise.resolve("test\ncontents"),
-                ok: true,
-                status: 200,
-                statusText: "OK"
-            }));
+    describe("getFileContents", function () {
+        beforeEach(function () {
+            this.requestSpy = sinon.stub().returns(
+                Promise.resolve({
+                    text: () => Promise.resolve("test\ncontents"),
+                    ok: true,
+                    status: 200,
+                    statusText: "OK"
+                })
+            );
             this.client = new GoogleDriveClient(FAKE_TOKEN);
             this.client.patcher.patch("request", this.requestSpy);
         });
 
-        it("returns expected data", function() {
+        it("returns expected data", function () {
             return this.client.getFileContents("abc").then(res => {
                 expect(res).to.equal("test\ncontents");
             });
         });
 
-        it("includes auth flag if error failed due to authorization", function() {
-            this.requestSpy = sinon.stub().returns(Promise.resolve({
-                text: () => Promise.resolve(
-                    `{"error":{"errors":[{"domain":"global","reason":"authError","message":"Invalid Credentials","locationType":"header","location":"Authorization"}],"code":401,"message":"Invalid Credentials"}}`
-                ),
-                ok: false,
-                headers: new Headers({
-                    "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
-                }),
-                status: 401,
-                statusText: "Unauthorized"
-            }));
+        it("includes auth flag if error failed due to authorization", function () {
+            this.requestSpy = sinon.stub().returns(
+                Promise.resolve({
+                    text: () =>
+                        Promise.resolve(
+                            `{"error":{"errors":[{"domain":"global","reason":"authError","message":"Invalid Credentials","locationType":"header","location":"Authorization"}],"code":401,"message":"Invalid Credentials"}}`
+                        ),
+                    ok: false,
+                    headers: new Headers({
+                        "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
+                    }),
+                    status: 401,
+                    statusText: "Unauthorized"
+                })
+            );
             this.client.patcher.patch("request", this.requestSpy);
-            return this.client.getFileContents("abc").then(res => {
-                throw new Error("Request should have failed");
-            }).catch(err => {
-                const info = Layerr.info(err);
-                expect(info).to.have.property("authFailure", true);
-            });
+            return this.client
+                .getFileContents("abc")
+                .then(res => {
+                    throw new Error("Request should have failed");
+                })
+                .catch(err => {
+                    const info = Layerr.info(err);
+                    expect(info).to.have.property("authFailure", true);
+                });
         });
     });
 });

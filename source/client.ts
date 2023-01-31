@@ -2,7 +2,11 @@ import { HotPatcher } from "hot-patcher";
 import { request } from "./request.js";
 import { createDirectory } from "./requests/createDirectory.js";
 import { deleteFile } from "./requests/deleteFile.js";
-import { getDirectoryContents, mapDirectoryContents, PosixPathFileItem } from "./requests/getDirectoryContents.js";
+import {
+    getDirectoryContents,
+    mapDirectoryContents,
+    PosixPathFileItem
+} from "./requests/getDirectoryContents.js";
 import { getFileContents } from "./requests/getFileContents.js";
 import { putFileContents } from "./requests/putFileContents.js";
 import { FileItem, FileTreeNode } from "./util/directoryContents.js";
@@ -58,9 +62,19 @@ export class GoogleDriveClient {
         return mapDirectoryContents(this.__token, this.patcher, this.__cache, path);
     }
 
-    async putFileContents(contents: string, id: null, name: string, parentID?: string): Promise<string>; // new file
+    async putFileContents(
+        contents: string,
+        id: null,
+        name: string,
+        parentID?: string
+    ): Promise<string>; // new file
     async putFileContents(contents: string, id: string): Promise<string>; // update
-    async putFileContents(contents: string, id: string | null, name?: string, parentID?: string): Promise<string> {
+    async putFileContents(
+        contents: string,
+        id: string | null,
+        name?: string,
+        parentID?: string
+    ): Promise<string> {
         return putFileContents({
             contents,
             id: id ? id : undefined,

@@ -31,14 +31,10 @@ export interface PosixPathFileItem extends FileItem {
 const CACHED_DIR_RESULTS_KEY = "@@dirresults";
 const CACHED_DIR_RESULTS_MAX_AGE = 10000;
 
-export async function getDirectoryContents(options: InternalGetDirectoryContentsOptions): Promise<FileTreeNode | FileItem[]> {
-    const {
-        currentFiles = [],
-        formTree,
-        nextPageToken = null,
-        patcher,
-        token
-    } = options;
+export async function getDirectoryContents(
+    options: InternalGetDirectoryContentsOptions
+): Promise<FileTreeNode | FileItem[]> {
+    const { currentFiles = [], formTree, nextPageToken = null, patcher, token } = options;
     const config: RequestConfig = {
         url: "https://www.googleapis.com/drive/v3/files",
         method: "GET",
@@ -86,14 +82,22 @@ export async function getDirectoryContents(options: InternalGetDirectoryContents
     return formTree ? formulateTree(files) : files;
 }
 
-export async function mapDirectoryContents(token: string, patcher: HotPatcher, context: Record<string, any>, path: string): Promise<Array<PosixPathFileItem>> {
+export async function mapDirectoryContents(
+    token: string,
+    patcher: HotPatcher,
+    context: Record<string, any>,
+    path: string
+): Promise<Array<PosixPathFileItem>> {
     let contents: Array<FileItem>;
-    if (!context[CACHED_DIR_RESULTS_KEY] || (Date.now() - context[CACHED_DIR_RESULTS_KEY].updated > CACHED_DIR_RESULTS_MAX_AGE)) {
-        contents = await getDirectoryContents({
+    if (
+        !context[CACHED_DIR_RESULTS_KEY] ||
+        Date.now() - context[CACHED_DIR_RESULTS_KEY].updated > CACHED_DIR_RESULTS_MAX_AGE
+    ) {
+        contents = (await getDirectoryContents({
             formTree: false,
             patcher,
             token
-        }) as Array<FileItem>;
+        })) as Array<FileItem>;
         if (context[CACHED_DIR_RESULTS_KEY]) {
             Object.assign(context[CACHED_DIR_RESULTS_KEY], {
                 cachedContents: contents,
@@ -113,16 +117,21 @@ export async function mapDirectoryContents(token: string, patcher: HotPatcher, c
     } else {
         contents = context[CACHED_DIR_RESULTS_KEY].cachedContents;
     }
-    const getDirPath = (dirContents: Array<FileItem>, itemID: string, items: Array<string> = []): Array<string> => {
+    const getDirPath = (
+        dirContents: Array<FileItem>,
+        itemID: string,
+        items: Array<string> = []
+    ): Array<string> => {
         const item = dirContents.find(item => item.id === itemID);
-        const [ parentID ] = item.parents;
+        const [parentID] = item.parents;
         const parentItem = dirContents.find(item => item.id === parentID);
         if (parentItem) {
             return getDirPath(dirContents, parentID, [parentItem.filename, ...items]);
         }
         return items;
     };
-    const pathsMatch = (pathA: string, pathB: string): boolean => pathA.replace(/\/+$/, "") === pathB.replace(/\/+$/, "");
+    const pathsMatch = (pathA: string, pathB: string): boolean =>
+        pathA.replace(/\/+$/, "") === pathB.replace(/\/+$/, "");
     return contents
         .map(item => ({
             ...item,

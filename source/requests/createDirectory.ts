@@ -13,12 +13,7 @@ export interface InternalCreateDirectoryOptions {
 }
 
 export async function createDirectory(options: InternalCreateDirectoryOptions): Promise<string> {
-    const {
-        parentID,
-        patcher,
-        name,
-        token
-    } = options;
+    const { parentID, patcher, name, token } = options;
     const parents = parentID ? [parentID] : [];
     const config: RequestConfig = {
         url: URL_CREATE_DIRECTORY,
@@ -37,13 +32,16 @@ export async function createDirectory(options: InternalCreateDirectoryOptions): 
     handleBadResponse(response);
     const { id } = await response.json();
     if (!id) {
-        throw new Layerr({
-            info: {
-                name,
-                parents,
-                url: URL_CREATE_DIRECTORY
-            }
-        }, "Failed creating directory: No new directory ID returned");
+        throw new Layerr(
+            {
+                info: {
+                    name,
+                    parents,
+                    url: URL_CREATE_DIRECTORY
+                }
+            },
+            "Failed creating directory: No new directory ID returned"
+        );
     }
     return id;
 }
