@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v1.3.4
+_2023-01-31_
+
+ * **Bugfix**:
+   * Error handling would miss expired tokens due to newly added quotes (thanks Google)
+
 ## v1.3.3
 _2022-01-30_
 
