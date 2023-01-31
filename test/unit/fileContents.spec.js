@@ -60,31 +60,58 @@ describe("fileContents", function () {
             });
         });
 
-        it("includes auth flag if error failed due to authorization", function () {
-            this.requestSpy = sinon.stub().returns(
-                Promise.resolve({
-                    text: () =>
-                        Promise.resolve(
-                            `{"error":{"errors":[{"domain":"global","reason":"authError","message":"Invalid Credentials","locationType":"header","location":"Authorization"}],"code":401,"message":"Invalid Credentials"}}`
-                        ),
-                    ok: false,
-                    headers: new Headers({
-                        "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
-                    }),
-                    status: 401,
-                    statusText: "Unauthorized"
-                })
-            );
-            this.client.patcher.patch("request", this.requestSpy);
-            return this.client
-                .getFileContents("abc")
-                .then(res => {
-                    throw new Error("Request should have failed");
-                })
-                .catch(err => {
-                    const info = Layerr.info(err);
-                    expect(info).to.have.property("authFailure", true);
-                });
+        [
+            [
+                "no error quotes",
+                {
+                    "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
+                }
+            ],
+            [
+                "error quotes",
+                {
+                    "www-authenticate": `Bearer realm="https://accounts.google.com/", error="invalid_token"`
+                }
+            ]
+        ].forEach(([type, headers]) => {
+            it(`includes auth flag if error failed due to authorization (${type})`, function () {
+                this.requestSpy = sinon.stub().returns(
+                    Promise.resolve({
+                        text: () =>
+                            Promise.resolve(
+                                JSON.stringify({
+                                    error: {
+                                        errors: [
+                                            {
+                                                domain: "global",
+                                                reason: "authError",
+                                                message: "Invalid Credentials",
+                                                locationType: "header",
+                                                location: "Authorization"
+                                            }
+                                        ],
+                                        code: 401,
+                                        message: "Invalid Credentials"
+                                    }
+                                })
+                            ),
+                        ok: false,
+                        headers: new Headers(headers),
+                        status: 401,
+                        statusText: "Unauthorized"
+                    })
+                );
+                this.client.patcher.patch("request", this.requestSpy);
+                return this.client
+                    .getFileContents("abc")
+                    .then(res => {
+                        throw new Error("Request should have failed");
+                    })
+                    .catch(err => {
+                        const info = Layerr.info(err);
+                        expect(info).to.have.property("authFailure", true);
+                    });
+            });
         });
     });
 });

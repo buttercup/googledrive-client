@@ -30,7 +30,7 @@ export function handleBadResponse(response: Response): void {
                 {
                     cause: error,
                     info: {
-                        authFailure: /error=invalid_token/.test(
+                        authFailure: /error=(")?invalid_token/.test(
                             response.headers.get("www-authenticate")
                         )
                     }

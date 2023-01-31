@@ -1,7 +1,10 @@
+import Module from "node:module";
 import sinon from "sinon";
 import { expect } from "chai";
 import { GoogleDriveClient } from "../../dist/index.js";
-import testResults from "./resources/directoryContentsResponse.json" assert { type: "json" };
+
+const require = Module.createRequire(import.meta.url);
+const testResults = require("./resources/directoryContentsResponse.json");
 
 const FAKE_TOKEN = "aaaaabbbbbbccccccddddddeeeeee";
 
