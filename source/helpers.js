@@ -11,7 +11,7 @@ function handleError(err) {
         throw new Layerr({
             cause: err,
             info: {
-                authFailure: /error=invalid_token/.test(err.responseHeaders["www-authenticate"])
+                authFailure: /error=(")?invalid_token/.test(err.responseHeaders["www-authenticate"])
             }
         }, "Request failed");
     }
