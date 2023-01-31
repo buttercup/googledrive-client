@@ -8,13 +8,20 @@
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf dist",
+    "format": "prettier --write '{source,test}/**/*.{js,ts}'",
     "prepublishOnly": "npm run build",
-    "test": "npm run test:unit",
+    "test": "npm run test:unit && npm run test:format",
+    "test:format": "prettier --check '{source,test}/**/*.{js,ts}'",
     "test:unit": "npm run build && c8 --src ./dist --check-coverage --lines 70 --functions 80 --branches 92 --statements 70 mocha 'test/unit/**/*.spec.js'"
   },
   "files": [
     "dist/**/*"
   ],
+  "lint-staged": {
+    "{source,test}/**/*.{js,ts}": [
+      "prettier --write"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/buttercup/googledrive-client.git"
@@ -43,7 +50,10 @@
     "c8": "^7.12.0",
     "chai": "^4.3.4",
     "fetch-headers": "^3.0.1",
+    "husky": "^4.3.8",
+    "lint-staged": "^13.1.0",
     "mocha": "^9.1.3",
+    "prettier": "^2.8.3",
     "rimraf": "^3.0.2",
     "sinon": "^12.0.1",
     "typescript": "^4.9.4"
