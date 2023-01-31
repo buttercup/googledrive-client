@@ -26,7 +26,7 @@ export function handleBadResponse(response: Response): void {
             throw new Layerr({
                 cause: error,
                 info: {
-                    authFailure: /error=invalid_token/.test(response.headers.get("www-authenticate"))
+                    authFailure: /error="invalid_token"/.test(response.headers.get("www-authenticate"))
                 }
             }, "Bad authentication");
         }

@@ -61,7 +61,7 @@ describe("fileContents", function() {
                 ),
                 ok: false,
                 headers: new Headers({
-                    "www-authenticate": `Bearer realm="https://accounts.google.com/", error=invalid_token`
+                    "www-authenticate": `Bearer realm="https://accounts.google.com/", error="invalid_token"`
                 }),
                 status: 401,
                 statusText: "Unauthorized"
