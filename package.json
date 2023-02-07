@@ -42,8 +42,8 @@
   },
   "homepage": "https://github.com/buttercup/googledrive-client#readme",
   "dependencies": {
+    "@buttercup/fetch": "^0.1.0",
     "base64-js": "^1.5.1",
-    "cross-fetch": "^3.1.5",
     "hot-patcher": "^2.0.0",
     "layerr": "^1.0.0",
     "url-parse": "^1.5.10"
