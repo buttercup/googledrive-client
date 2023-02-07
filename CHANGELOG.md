@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v2.1.0
+_2023-02-07_
+
+ * Replace `cross-fetch` with [`@buttercup/fetch`](https://github.com/buttercup/fetch)
+
 ## v2.0.1
 _2023-01-31_
 
