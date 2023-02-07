@@ -1,4 +1,5 @@
 import { HotPatcher } from "hot-patcher";
+import { Response } from "@buttercup/fetch";
 import { handleBadResponse, RequestConfig } from "../request.js";
 import { MIME_FOLDER } from "../symbols.js";
 import { FileItem, FileTreeNode, formulateTree } from "../util/directoryContents.js";
@@ -53,7 +54,10 @@ export async function getDirectoryContents(
     }
     const response = await patcher.execute<Promise<Response>>("request", config);
     handleBadResponse(response);
-    const result = await response.json();
+    const result = (await response.json()) as {
+        files: Array<GoogleDriveObject>;
+        nextPageToken?: string;
+    };
     const files: Array<FileItem> = [
         ...currentFiles,
         ...result.files
@@ -63,7 +67,10 @@ export async function getDirectoryContents(
                 filename: googleFile.name,
                 parents: [...(googleFile.parents || [])],
                 mime: googleFile.mimeType,
-                type: googleFile.mimeType === MIME_FOLDER ? "directory" : "file",
+                type:
+                    googleFile.mimeType === MIME_FOLDER
+                        ? ("directory" as "directory")
+                        : ("file" as "file"),
                 created: googleFile.createdTime,
                 modified: googleFile.modifiedTime,
                 shared: googleFile.shared,

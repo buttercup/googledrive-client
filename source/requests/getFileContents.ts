@@ -1,4 +1,5 @@
 import { HotPatcher } from "hot-patcher";
+import { Response } from "@buttercup/fetch";
 import { handleBadResponse, RequestConfig } from "../request.js";
 
 export interface InternalGetFileContentsOptions {

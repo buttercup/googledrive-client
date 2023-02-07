@@ -1,5 +1,6 @@
 import { HotPatcher } from "hot-patcher";
 import _Layerr from "layerr";
+import { Response } from "@buttercup/fetch";
 import { handleBadResponse, RequestConfig } from "../request.js";
 import { MIME_FOLDER, URL_CREATE_DIRECTORY } from "../symbols.js";
 
@@ -30,7 +31,7 @@ export async function createDirectory(options: InternalCreateDirectoryOptions): 
     };
     const response = await patcher.execute<Promise<Response>>("request", config);
     handleBadResponse(response);
-    const { id } = await response.json();
+    const { id } = (await response.json()) as { id: string };
     if (!id) {
         throw new Layerr(
             {

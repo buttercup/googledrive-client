@@ -1,4 +1,4 @@
-import fetch from "cross-fetch";
+import { Response, fetch } from "@buttercup/fetch";
 import URL from "url-parse";
 import _Layerr from "layerr";
 import { Headers } from "./types.js";
@@ -51,6 +51,7 @@ export async function request(config: RequestConfig): Promise<Response> {
     const response = await fetch(url.toString(), {
         method: config.method,
         headers: config.headers,
+        // @ts-ignore
         body: config.body
     });
     return response;

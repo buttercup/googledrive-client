@@ -1,4 +1,5 @@
 import { HotPatcher } from "hot-patcher";
+import { Response } from "@buttercup/fetch";
 import { handleBadResponse, RequestConfig } from "../request.js";
 import { encodeBase64 } from "../util/encoding.js";
 
@@ -81,6 +82,8 @@ export async function putFileContents(options: InternalPutFileContentsOptions): 
     };
     const response = await patcher.execute<Promise<Response>>("request", config);
     handleBadResponse(response);
-    const { id: newID } = await response.json();
+    const { id: newID } = (await response.json()) as {
+        id: string;
+    };
     return newID;
 }
