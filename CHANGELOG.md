@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v2.1.1
+_2023-02-07_
+
+ * **Bugfix**:
+   * Include `node-fetch` in dependencies (for node use)
+
 ## v2.1.0
 _2023-02-07_
 
