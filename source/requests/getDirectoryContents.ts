@@ -40,9 +40,11 @@ export async function getDirectoryContents(
         url: "https://www.googleapis.com/drive/v3/files",
         method: "GET",
         query: {
-            corpora: "user",
+            corpora: "allDrives",
+            includeItemsFromAllDrives: "true",
             pageSize: "1000",
             spaces: "drive",
+            supportsAllDrives: "true",
             fields: "files(id,name,mimeType,createdTime,modifiedTime,shared,size,parents,trashed),nextPageToken"
         },
         headers: {

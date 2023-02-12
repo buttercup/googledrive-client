@@ -13,6 +13,9 @@ export async function deleteFile(options: InternalDeleteFileOptions): Promise<vo
     const config: RequestConfig = {
         url: `https://www.googleapis.com/drive/v3/files/${options.id}`,
         method: "DELETE",
+        query: {
+            supportsAllDrives: "true"
+        },
         headers: {
             Authorization: `Bearer ${options.token}`
         }

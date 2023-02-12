@@ -71,7 +71,8 @@ export async function putFileContents(options: InternalPutFileContentsOptions): 
         url,
         method,
         query: {
-            uploadType: "multipart"
+            uploadType: "multipart",
+            supportsAllDrives: "true"
         },
         headers: {
             Authorization: `Bearer ${token}`,
