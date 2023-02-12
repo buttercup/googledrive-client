@@ -14,7 +14,8 @@ export async function getFileContents(options: InternalGetFileContentsOptions): 
         url: `https://www.googleapis.com/drive/v3/files/${options.id}`,
         method: "GET",
         query: {
-            alt: "media"
+            alt: "media",
+            supportsAllDrives: "true"
         },
         headers: {
             Authorization: `Bearer ${options.token}`

@@ -19,6 +19,9 @@ export async function createDirectory(options: InternalCreateDirectoryOptions): 
     const config: RequestConfig = {
         url: URL_CREATE_DIRECTORY,
         method: "POST",
+        query: {
+            supportsAllDrives: "true"
+        },
         headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json"
