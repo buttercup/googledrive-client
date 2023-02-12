@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v2.2.0
+_2023-02-12_
+
+ * [#15](https://github.com/buttercup/googledrive-client/issues/15): Support shared Google Drive resources
+
 ## v2.1.1
 _2023-02-07_
 
