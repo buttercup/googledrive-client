@@ -1,5 +1,11 @@
 # Google Drive Client changelog
 
+## v2.2.1
+_2023-04-24_
+
+ * **Bugfix**
+   * `fetch` causes "Illegal invocation" when used in browsers
+
 ## v2.2.0
 _2023-02-12_
 
