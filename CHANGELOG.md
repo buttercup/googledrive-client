@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v2.2.2
+_2023-07-16_
+
+ * React-Native entry in `package.json`
+
 ## v2.2.1
 _2023-04-24_
 
