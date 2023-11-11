@@ -1,9 +1,7 @@
 import { Response, fetch } from "@buttercup/fetch";
 import URL from "url-parse";
-import _Layerr from "layerr";
+import { Layerr } from "layerr";
 import { Headers } from "./types.js";
-
-const { Layerr } = _Layerr;
 
 export interface RequestConfig {
     body?: string | Buffer | ArrayBufferLike;
