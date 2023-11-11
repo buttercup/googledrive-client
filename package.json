@@ -1,6 +1,6 @@
 {
   "name": "@buttercup/googledrive-client",
-  "version": "2.2.2",
+  "version": "2.3.0",
   "description": "Basic client for Google Drive",
   "exports": "./dist/index.js",
   "react-native": "./dist/index.js",
