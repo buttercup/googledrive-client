@@ -1,5 +1,10 @@
 # Google Drive Client changelog
 
+## v2.3.0
+_2023-11-11_
+
+ * Update dependencies, `layerr`
+
 ## v2.2.2
 _2023-07-16_
 
